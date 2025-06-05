@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from jobspy import scrape_jobs
 
 app = Flask(__name__)
+CORS(app)  # Enables CORS for all routes
 
 @app.route("/scrape_jobs_linkedin", methods=["GET"])
 def scrape_linkedin():
