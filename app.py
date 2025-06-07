@@ -43,7 +43,7 @@ def scrape_linkedin():
             "job_url_direct": row.get("job_url_direct", row.get("job_url"))
         })
 
-    return jsonify(jobs_json)
+    return jsonify({"data": jobs_json})
 
 
 @app.route("/scrape_jobs_indeed", methods=["GET"])
@@ -88,7 +88,7 @@ def scrape_indeed():
             "company_logo": row.get("company_logo")
         })
 
-    return jsonify(jobs_json)
+    return jsonify({"data": jobs_json})
 
 
 if __name__ == "__main__":
