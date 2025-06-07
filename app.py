@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from jobspy import scrape_jobs
-
+import json
 app = Flask(__name__)
 CORS(app)  # Enables CORS for all routes
 
@@ -43,7 +43,8 @@ def scrape_linkedin():
             "job_url_direct": row.get("job_url_direct", row.get("job_url"))
         })
 
-    return jsonify({"data": jobs_json})
+    return json.dumps(jsonify({"data": jobs_json}))
+
 
 
 @app.route("/scrape_jobs_indeed", methods=["GET"])
@@ -88,7 +89,8 @@ def scrape_indeed():
             "company_logo": row.get("company_logo")
         })
 
-    return jsonify({"data": jobs_json})
+    return json.dumps(jsonify({"data": jobs_json}))
+
 
 
 if __name__ == "__main__":
