@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from jobspy import scrape_jobs
 import json
+from flask import Response
+
 app = Flask(__name__)
 CORS(app)  # Enables CORS for all routes
 
@@ -38,12 +40,15 @@ def scrape_linkedin():
             "title": row.get("title"),
             "company": row.get("company"),
             "location": row.get("location"),
-            "date_posted": row.get("date_posted"),
+            "date_posted": row.get("date_posted").isoformat() if row.get("date_posted") else None,
             "job_type": row.get("job_type"),
             "job_url_direct": row.get("job_url_direct", row.get("job_url"))
         })
 
-    return json.dumps(jsonify({"data": jobs_json}))
+    return Response(
+    json.dumps({"data": jobs_json}),
+    mimetype='application/json'
+)
 
 
 
@@ -83,13 +88,16 @@ def scrape_indeed():
             "title": row.get("title"),
             "company": row.get("company"),
             "location": row.get("location"),
-            "date_posted": row.get("date_posted"),
+            "date_posted": row.get("date_posted").isoformat() if row.get("date_posted") else None,
             "job_type": row.get("job_type"),
             "job_url_direct": row.get("job_url_direct", row.get("job_url")),
             "company_logo": row.get("company_logo")
         })
 
-    return json.dumps(jsonify({"data": jobs_json}))
+    return Response(
+    json.dumps({"data": jobs_json}),
+    mimetype='application/json'
+)
 
 
 
