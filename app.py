@@ -3,6 +3,8 @@ from flask_cors import CORS
 from jobspy import scrape_jobs
 import json
 from flask import Response
+import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)  # Enables CORS for all routes
@@ -35,14 +37,51 @@ def scrape_linkedin():
 
     jobs_json = []
     for _, row in jobs_df.iterrows():
+        # Handle company_logo
+        company_logo = row.get("company_logo")
+        if pd.isna(company_logo):
+            company_logo = None
+            
+        # Handle date_posted
+        date_posted = row.get("date_posted")
+        if pd.isna(date_posted):
+            date_posted = None
+        else:
+            date_posted = date_posted.isoformat()
+            
+        # Handle job_url
+        job_url = row.get("job_url")
+        if pd.isna(job_url):
+            job_url = None
+            
+        # Handle title
+        title = row.get("title")
+        if pd.isna(title):
+            title = None
+            
+        # Handle company
+        company = row.get("company")
+        if pd.isna(company):
+            company = None
+            
+        # Handle location
+        location = row.get("location")
+        if pd.isna(location):
+            location = None
+            
+        # Handle job_type
+        job_type = row.get("job_type")
+        if pd.isna(job_type):
+            job_type = None
+            
         jobs_json.append({
-            "job_url": row.get("job_url"),
-            "title": row.get("title"),
-            "company": row.get("company"),
-            "location": row.get("location"),
-            "date_posted": row.get("date_posted").isoformat() if row.get("date_posted") else None,
-            "job_type": row.get("job_type"),
-            "job_url_direct": row.get("job_url_direct", row.get("job_url"))
+            "job_url": job_url,
+            "title": title,
+            "company": company,
+            "location": location,
+            "date_posted": date_posted,
+            "job_type": job_type,
+            "company_logo": company_logo
         })
 
     return jsonify({
@@ -83,15 +122,51 @@ def scrape_indeed():
 
     jobs_json = []
     for _, row in jobs_df.iterrows():
+        # Handle company_logo
+        company_logo = row.get("company_logo")
+        if pd.isna(company_logo):
+            company_logo = None
+            
+        # Handle date_posted
+        date_posted = row.get("date_posted")
+        if pd.isna(date_posted):
+            date_posted = None
+        else:
+            date_posted = date_posted.isoformat()
+            
+        # Handle job_url
+        job_url = row.get("job_url")
+        if pd.isna(job_url):
+            job_url = None
+            
+        # Handle title
+        title = row.get("title")
+        if pd.isna(title):
+            title = None
+            
+        # Handle company
+        company = row.get("company")
+        if pd.isna(company):
+            company = None
+            
+        # Handle location
+        location = row.get("location")
+        if pd.isna(location):
+            location = None
+            
+        # Handle job_type
+        job_type = row.get("job_type")
+        if pd.isna(job_type):
+            job_type = None
+            
         jobs_json.append({
-            "job_url": row.get("job_url"),
-            "title": row.get("title"),
-            "company": row.get("company"),
-            "location": row.get("location"),
-            "date_posted": row.get("date_posted").isoformat() if row.get("date_posted") else None,
-            "job_type": row.get("job_type"),
-            "job_url_direct": row.get("job_url_direct", row.get("job_url")),
-            "company_logo": row.get("company_logo")
+            "job_url": job_url,
+            "title": title,
+            "company": company,
+            "location": location,
+            "date_posted": date_posted,
+            "job_type": job_type,
+            "company_logo": company_logo
         })
 
     return jsonify({
