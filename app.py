@@ -45,10 +45,7 @@ def scrape_linkedin():
             "job_url_direct": row.get("job_url_direct", row.get("job_url"))
         })
 
-    return jsonify({
-        "result": jobs_json,
-        "scraped-jobs": len(jobs_json)
-    })
+    return jsonify(result=jobs_json)
 
 
 
@@ -94,10 +91,7 @@ def scrape_indeed():
             "company_logo": row.get("company_logo")
         })
 
-    return jsonify({
-        "result": jobs_json,
-        "scraped-jobs": len(jobs_json)
-    })
+    return jsonify(result=jobs_json)
 
 
 
